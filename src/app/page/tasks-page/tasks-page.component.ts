@@ -43,7 +43,7 @@ export class TasksPageComponent implements OnInit {
   deleteTodo(id: any) {
     this.todoService.deleteTodo(id)
       .subscribe(() => {
-        this.todos = this.todos.filter(p => p.id !== id);
+        this.todos = this.todos.filter(t => t.id !== id);
       })
   }
 

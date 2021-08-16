@@ -16,6 +16,7 @@ import { AuthService } from 'src/services/auth.service';
 import { AuthGuard } from 'src/services/auth.guard';
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { SearchTaskComponent } from './components/search-task/search-task.component';
+import { NotFoundComponent } from './page/not-found/not-found.component';
 
 
 
@@ -30,6 +31,7 @@ import { SearchTaskComponent } from './components/search-task/search-task.compon
     TaskComponent,
     AddTaskComponent,
     SearchTaskComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

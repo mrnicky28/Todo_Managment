@@ -5,6 +5,7 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { TaskEditPageComponent } from './page/task-edit-page/task-edit-page.component';
 import { TasksPageComponent } from './page/tasks-page/tasks-page.component';
 import { AuthGuard } from 'src/services/auth.guard';
+import { NotFoundComponent } from './page/not-found/not-found.component';
 
 
 
@@ -15,7 +16,8 @@ const routes: Routes = [
     {path: 'auth', component: AuthPageComponent},
     {path: 'tasks', component: TasksPageComponent, canActivate: [AuthGuard]},
     {path: 'task/edit/:id', component: TaskEditPageComponent, canActivate: [AuthGuard]}
-  ]}
+  ]},
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
