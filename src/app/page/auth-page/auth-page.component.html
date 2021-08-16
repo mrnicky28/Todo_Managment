@@ -1,0 +1,36 @@
+<form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
+    <h2 class="auth-title">Войти в приложение</h2>
+
+    <div class="form-control">
+        <label for="email">Email:</label>
+        <input id="email" type="email" formControlName="email">
+        <div *ngIf="form.get('email').touched && form.get('email').invalid" class="validation">
+            <small *ngIf="form.get('email').errors.required">Поле email не должно быть пустым</small>
+            <small *ngIf="form.get('email').errors.email">Введите корректный email</small>
+        </div>
+    </div>
+
+    <div class="form-control">
+        <label for="password">Пароль:</label>
+        <input id="password" type="password" formControlName="password">
+        <div *ngIf="form.get('password').touched && form.get('password').invalid" class="validation">
+            <small *ngIf="form.get('password').errors.required">Поле пароль не должно быть пустым</small>
+            <small *ngIf="form.get('password').errors.minlength">Пароль должен содержать не менее
+        {{ form.get('password').errors.minlength.requiredLength }} символов</small>
+            <small *ngIf="form.get('password').errors.maxlength">Пароль не должен привышать
+        {{ form.get('password').errors.maxlength.requiredLength }} символов</small>
+            <small *ngIf="form.get('password').errors.correctPassword">Пароль должен содержать строчные и заглавные буквы латинского алфавита</small>
+        </div>
+    </div>
+
+    <div class="alern-danger" *ngIf="auth.error$ | async as error">
+        {{ error }}
+    </div>
+
+    <div class="alern-info" *ngIf="message">
+        {{ message }}
+    </div>
+
+
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid || submitted">Войти</button>
+</form>

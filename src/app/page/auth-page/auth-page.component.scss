@@ -1,0 +1,36 @@
+.auth-card {
+    padding: 1rem;
+    border: #ccc 1px dotted;
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-content {
+        margin-bottom: .5rem;
+    }
+    &.auth-title {
+        display: block;
+        margin-left: auto;
+        margin-right: auto
+    }
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+input {
+    border-radius: 10px;
+    &.ng-invalid.ng-touched {
+        border: 2px solid red;
+    }
+    &.ng-valid {
+        border: 2px solid green
+    }
+}
+
+small {
+    display: block;
+}
