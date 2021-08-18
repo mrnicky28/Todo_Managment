@@ -5,6 +5,7 @@
     <div class="wrapper-task">
 
         <app-add-task></app-add-task>
+
         <p *ngIf="error; else todoBlocks" class="error">{{ error }}</p>
 
         <ng-template #todoBlocks>
@@ -20,7 +21,7 @@
                             <div class="card-footer">
                                 <div>{{ todo.category}}</div>
                                 <div class="btns">
-                                    <button class="btn" type="button" (click)="updateTodo()">Edit</button>
+                                    <button class="btn" type="button"><a routerLink="/task/edit/{{ todo.id }}">Edit</a></button>
                                     <button class="btn" type="button" [disabled]="todo.completed" (click)="completeTodo(todo.id)">To
                     complete</button>
                                 </div>
@@ -39,4 +40,5 @@
             </ng-template>
         </ng-template>
     </div>
+
 </div>

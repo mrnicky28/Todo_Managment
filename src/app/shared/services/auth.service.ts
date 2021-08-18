@@ -21,7 +21,7 @@ export class AuthService {
     user.returnSecureToken = true;
     return this.http
       .post<FbAuthResponse>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
+        `${environment.fbUrl}/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
         user
       )
       .pipe(tap(this.setToken), catchError(this.handleError.bind(this)));

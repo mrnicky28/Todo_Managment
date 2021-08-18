@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, delay, map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Categories } from '../models/category';
 import { Todo } from '../models/todo-interface';
 
@@ -22,22 +24,34 @@ export class TodoService {
     this.todos$.next(this.todos$.value.filter((todo) => todo.id !== id));
   }
 
+  updateTodo(todo: Todo): void {
+    this.todos$.next(
+      this.todos$.value.map((todoItem) =>
+        todoItem.id === todo.id ? { ...todoItem, ...todo } : todoItem
+      )
+    );
+  }
+
   getTodos(): BehaviorSubject<Todo[]> {
     return this.todos$;
   }
 
+  getTodoByID(id: number): Todo {
+    return this.todos$.value.find((todo) => {
+      return todo.id === id;
+    });
+  }
+
   loadingTodos(): Observable<Todo[]> {
-    return this.http
-      .get<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=10')
-      .pipe(
-        tap((data) => {
-          this.todos$.next(this.transformData(data));
-        }),
-        catchError((error) => {
-          console.log('Error', error.message);
-          return throwError(error);
-        })
-      );
+    return this.http.get<Todo[]>(`${environment.apiUrl}/todos?_limit=10`).pipe(
+      tap((data) => {
+        this.todos$.next(this.transformData(data));
+      }),
+      catchError((error) => {
+        console.log('Error', error.message);
+        return throwError(error);
+      })
+    );
   }
 
   completeTodo(id: number): void {

@@ -1,6 +1,6 @@
 <div class="card">
 
-    <form class="form-control" [formGroup]="form" (ngSubmit)="addTodo()">
+    <form class="form-control" [formGroup]="form" (ngSubmit)="onSubmit()">
 
         <div class="input-wrapper">
             <input class="input-title" type="text" title="Add task" placeholder="Title" formControlName="title">
@@ -16,8 +16,10 @@
 
             <div *ngIf="form.get('description').invalid && form.get('description').touched" class="validation">
                 <small *ngIf="form.get('description').errors.required">Description field cannot be empty</small>
-                <small *ngIf="form.get('description').errors.minlength">Description must contain at least 10 characters</small>
-                <small *ngIf="form.get('description').errors.correctDescription">At least one character and at least one number
+                <small *ngIf="form.get('description').errors.minlength">Description must contain at least 10
+          characters</small>
+                <small *ngIf="form.get('description').errors.correctDescription">At least one character and at least one
+          number
           must be entered</small>
             </div>
         </div>
@@ -30,7 +32,9 @@
       <option>Category 5</option>
     </select>
 
-        <button class="btn btn-add" type="submit" [disabled]="form.invalid">Add</button>
+        <button *ngIf="editMode" class="btn" type="submit" (click)="updateTodo()">Save</button>
+        <button *ngIf="!editMode" class="btn btn-add" type="submit" [disabled]="form.invalid">Add</button>
 
     </form>
+
 </div>

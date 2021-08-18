@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  ControlContainer,
+  FormGroup,
+  FormGroupDirective,
+} from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Todo } from 'src/app/shared/models/todo-interface';
@@ -9,6 +14,9 @@ import { TodoService } from 'src/app/shared/services/todo.service';
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
+  viewProviders: [
+    { provide: ControlContainer, useExisting: FormGroupDirective },
+  ],
 })
 export class TasksPageComponent implements OnInit {
   ngUnsubscribe = new Subject<string>();
@@ -16,10 +24,14 @@ export class TasksPageComponent implements OnInit {
   loading = false;
   error = '';
   searchValue: string;
-
-  constructor(private todoService: TodoService) {}
+  form: FormGroup;
+  constructor(
+    private todoService: TodoService,
+    private parentForm: FormGroupDirective
+  ) {}
 
   ngOnInit(): void {
+    // this.parentForm.form.addControl('second-address', this.form);
     this.todoService
       .getTodos()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -28,10 +40,6 @@ export class TasksPageComponent implements OnInit {
       (searchTerm: string) => (this.searchValue = searchTerm)
     );
   }
-  updateTodo() {
-    event.preventDefault();
-    event.stopPropagation();
-  }
 
   deleteTodo(id: any) {
     event.preventDefault();
@@ -39,7 +47,6 @@ export class TasksPageComponent implements OnInit {
 
     this.todoService.deleteTodo(id);
   }
-
   completeTodo(id: number) {
     event.preventDefault();
     event.stopPropagation();

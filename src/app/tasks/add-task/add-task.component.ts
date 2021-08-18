@@ -16,6 +16,8 @@ export class AddTaskComponent implements OnInit {
   error = '';
   form: FormGroup;
   searchValue: string;
+  editMode = false;
+  todoData: Todo;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,30 +26,54 @@ export class AddTaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe((data) => {
-      this.todos = data.todo;
+    this.route.params.subscribe((params) => {
+      console.log(params);
+      if (params.id) {
+        this.editMode = true;
+
+        this.todoData = this.todoService.getTodoByID(+params.id);
+        console.log(this.todoData);
+      }
     });
-    console.log(this.route.data);
 
     this.form = this.FormBuilder.group({
-      title: ['', [Validators.required, Validators.pattern(/[A-Z]\b/)]],
-      description: ['', [Validators.required, Validators.minLength(10)]],
+      title: [
+        this.editMode ? this.todoData.title : '',
+        [Validators.required, Validators.pattern(/[A-Z]\b/)],
+      ],
+      description: [
+        this.editMode ? this.todoData.description : '',
+        [Validators.required, Validators.minLength(10)],
+      ],
     });
   }
 
-  addTodo() {
+  onSubmit() {
     event.preventDefault();
     event.stopPropagation();
 
-    const newPost: Todo = {
+    // const newTodo: Todo = {
+    //   id: this.todos.length + 1,
+    //   title: this.form.value.title,
+    //   description: this.form.value.description,
+    //   completed: false,
+    // };
+
+    // this.todoService.addTodo(newTodo);
+    // this.form.reset();
+
+    console.log(this.editMode);
+  }
+
+  updateTodo() {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.todoService.updateTodo({
       id: this.todos.length + 1,
       title: this.form.value.title,
       description: this.form.value.description,
-      completed: false,
-    };
-
-    this.todoService.addTodo(newPost);
-    this.form.reset();
+    });
   }
 
   loadingTodos() {

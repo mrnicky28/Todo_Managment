@@ -1,6 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroupDirective,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
@@ -40,7 +44,7 @@ import { TodoResolver } from './todo.resolver';
     HttpClientModule,
   ],
   exports: [CommonModule, FormsModule, ReactiveFormsModule],
-  providers: [AuthService, AuthGuard, TodoResolver],
+  providers: [AuthService, AuthGuard, TodoResolver, FormGroupDirective],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
