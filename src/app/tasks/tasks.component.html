@@ -1,0 +1,42 @@
+<div class="wrapper">
+    <aside>
+        <app-search-task></app-search-task>
+    </aside>
+    <div class="wrapper-task">
+
+        <app-add-task></app-add-task>
+        <p *ngIf="error; else todoBlocks" class="error">{{ error }}</p>
+
+        <ng-template #todoBlocks>
+            <div *ngIf="!loading; else loadingBlock">
+                <div *ngIf="todos.length; else noTodos">
+                    <div routerLink="/task/edit/{{ todo.id }}" class="card" *ngFor="let todo of todos | filter:searchValue">
+
+                        <div class="post-info">
+                            <button class="btn btn-danger btn-delete" type="button" (click)="deleteTodo(todo.id)">X</button>
+                            <div class="title-info" [class.completed]="todo.completed">{{ todo.title | titlecase }}</div>
+                            <div [class.completed]="todo.completed">{{todo.description}}
+                            </div>
+                            <div class="card-footer">
+                                <div>{{ todo.category}}</div>
+                                <div class="btns">
+                                    <button class="btn" type="button" (click)="updateTodo()">Edit</button>
+                                    <button class="btn" type="button" [disabled]="todo.completed" (click)="completeTodo(todo.id)">To
+                    complete</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <ng-template #noTodos>
+                    <p class="loading">No posts</p>
+                </ng-template>
+            </div>
+
+            <ng-template #loadingBlock>
+                <p class="loading">Loading...</p>
+            </ng-template>
+        </ng-template>
+    </div>
+</div>

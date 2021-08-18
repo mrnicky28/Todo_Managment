@@ -1,0 +1,54 @@
+.btn {
+    display: inline-block;
+    background: var(--light-color);
+    color: #333;
+    padding: 0.4rem 1.3rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    transition: opacity 0.2s ease-in;
+    outline: none;
+    &:disabled {
+        cursor: not-allowed;
+        background: var(--light-color);
+        color: #111;
+    }
+}
+
+.card {
+    min-width: 320px;
+}
+
+.form-control {
+    text-align: end;
+}
+
+textarea {
+    resize: none;
+    font-family: Arial, Helvetica, sans-serif;
+    &::placeholder {
+        opacity: 0.7;
+    }
+}
+
+.btn-add {
+    background-color: #50c878;
+    margin: 10px 0;
+}
+
+.input-description {
+    min-height: 150px;
+}
+
+input::placeholder {
+    opacity: 0.7;
+}
+
+.input-wrapper {
+    margin-bottom: 15px;
+}
+
+.validation {
+    text-align: start;
+}

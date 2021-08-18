@@ -1,0 +1,57 @@
+.tasks {
+    min-width: 600px;
+    margin: 0 auto;
+    ;
+}
+
+aside {
+    margin-right: 15px;
+}
+
+.card {
+    min-width: 320px;
+}
+
+.wrapper-task {}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-info {
+    margin-bottom: 1rem;
+}
+
+.title-info {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 1rem;
+}
+
+.btn-delete {
+    float: right;
+}
+
+.btns {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+div.completed {
+    text-decoration: line-through;
+}
+
+@media (max-width: 720px) {
+    .wrapper {
+        flex-direction: column;
+    }
+    aside {
+        margin-right: 0;
+    }
+}

@@ -1,0 +1,58 @@
+.search-component {
+    width: 200px;
+}
+
+.search-box {
+    background-image: url('https://cdn.icon-icons.com/icons2/1111/PNG/128/loupe_79257.png');
+    background-repeat: no-repeat;
+    padding: 5px;
+    padding-left: 30px;
+    background-size: 25px;
+    border-radius: 10px;
+    border: 2px solid #b3b3b3;
+    font-size: 16px;
+    outline: none;
+}
+
+aside {
+    width: 200px;
+}
+
+input {
+    padding: .5rem;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+.search-result li a {
+    border-bottom: 2px solid rgb(228, 228, 228);
+    border-left: 2px solid rgb(228, 228, 228);
+    border-right: 2px solid rgb(228, 228, 228);
+    border-radius: 5px;
+    display: inline-block;
+    width: 100%;
+    padding: .5rem;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: black;
+}
+
+.search-result li a:hover {
+    background-color: #7df166;
+    color: white;
+}
+
+@media (max-width: 720px) {
+    .search-box {
+        min-width: 320px;
+        height: 40px;
+    }
+    .search-component {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    aside {
+        margin-right: 0;
+    }
+}

@@ -1,8 +1,0 @@
-<div class="search-component">
-    <input #searchBox class="search-box" placeholder="Todo search" (input)="search(searchBox.value)" />
-    <ul class="search-result">
-        <li *ngFor="let todo of todos$ | async">
-            <a routerLink="/detail/{{ todo.id}}">{{ todo.title}}</a>
-        </li>
-    </ul>
-</div>
