@@ -1,6 +1,6 @@
 <div class="card">
 
-    <form class="form-control" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form class="form-control" [formGroup]="form" (ngSubmit)="onSubmit($event)">
 
         <div class="input-wrapper">
             <input class="input-title" type="text" title="Add task" placeholder="Title" formControlName="title">
@@ -32,9 +32,9 @@
       <option>Category 5</option>
     </select>
 
-        <button *ngIf="editMode" class="btn" type="submit" (click)="updateTodo()">Save</button>
-        <button *ngIf="!editMode" class="btn btn-add" type="submit" [disabled]="form.invalid">Add</button>
-
+        <button class="btn" [class.btn-add]="!editMode" type="submit" [disabled]="form.invalid">
+          {{ !editMode ? 'Add' : 'Save' }}
+        </button>
     </form>
 
 </div>

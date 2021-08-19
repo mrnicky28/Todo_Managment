@@ -17,7 +17,14 @@ export class TodoService {
   constructor(private http: HttpClient) {}
 
   addTodo(todo: Todo): void {
-    this.todos$.next([...this.todos$.value, todo]);
+    this.todos$.next([
+      ...this.todos$.value,
+      {
+        id: this.todos$.value?.length + 1,
+        ...todo,
+      },
+    ]);
+    console.log(this.todos$);
   }
 
   deleteTodo(id: number): void {
@@ -36,10 +43,8 @@ export class TodoService {
     return this.todos$;
   }
 
-  getTodoByID(id: number): Todo {
-    return this.todos$.value.find((todo) => {
-      return todo.id === id;
-    });
+  getTodoByID(todoId: number): Todo {
+    return this.todos$.value.find(({ id }) => id === todoId);
   }
 
   loadingTodos(): Observable<Todo[]> {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Todo } from 'src/app/shared/models/todo-interface';
 
 import { TodoService } from 'src/app/shared/services/todo.service';
@@ -11,7 +13,7 @@ import { TodoService } from 'src/app/shared/services/todo.service';
   styleUrls: ['./add-task.component.scss'],
 })
 export class AddTaskComponent implements OnInit {
-  todos: Todo[] = [];
+  ngUnsubscribe$ = new Subject<void>();
   loading = false;
   error = '';
   form: FormGroup;
@@ -26,67 +28,69 @@ export class AddTaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      console.log(params);
-      if (params.id) {
-        this.editMode = true;
+    this.route.params
+      .pipe(takeUntil(this.ngUnsubscribe$))
+      .subscribe((params) => {
+        console.log(params);
+        if (params.id) {
+          this.editMode = true;
 
-        this.todoData = this.todoService.getTodoByID(+params.id);
-        console.log(this.todoData);
-      }
-    });
+          this.todoData = this.todoService.getTodoByID(+params.id);
+          console.log(this.todoData);
+        }
+      });
+
+    const { title, description } = this.todoData;
 
     this.form = this.FormBuilder.group({
       title: [
-        this.editMode ? this.todoData.title : '',
+        this.editMode ? title : '',
         [Validators.required, Validators.pattern(/[A-Z]\b/)],
       ],
       description: [
-        this.editMode ? this.todoData.description : '',
+        this.editMode ? description : '',
         [Validators.required, Validators.minLength(10)],
       ],
     });
   }
 
-  onSubmit() {
+  onSubmit(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
 
-    // const newTodo: Todo = {
-    //   id: this.todos.length + 1,
-    //   title: this.form.value.title,
-    //   description: this.form.value.description,
-    //   completed: false,
-    // };
+    if (!this.editMode) {
+      this.addTodo();
+    } else {
+      this.updateTodo();
+    }
+  }
 
-    // this.todoService.addTodo(newTodo);
-    // this.form.reset();
+  addTodo() {
+    const formData = this.form.getRawValue();
+
+    const newTodo: Todo = {
+      ...formData,
+      completed: false,
+    };
+
+    this.todoService.addTodo(newTodo);
+
+    this.form.reset();
 
     console.log(this.editMode);
   }
 
   updateTodo() {
-    event.preventDefault();
-    event.stopPropagation();
+    const formData = this.form.getRawValue();
 
     this.todoService.updateTodo({
-      id: this.todos.length + 1,
-      title: this.form.value.title,
-      description: this.form.value.description,
+      ...this.todoData,
+      ...formData,
     });
   }
 
-  loadingTodos() {
-    this.loading = true;
-    this.todoService.loadingTodos().subscribe(
-      (data) => {
-        this.todos = data;
-        this.loading = false;
-      },
-      (error) => {
-        this.error = error.message;
-        this.loading = false;
-      }
-    );
+  ngOnDestroy(): void {
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }
