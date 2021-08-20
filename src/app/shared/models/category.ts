@@ -1,5 +1,5 @@
 export interface Category {
-  titli?: string;
+  title?: string;
   color?: string;
 }
 

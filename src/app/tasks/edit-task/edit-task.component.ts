@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Todo } from 'src/app/shared/models/todo-interface';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgModule } from '@angular/core';
 
 import { TodoService } from 'src/app/shared/services/todo.service';
+import { Categories } from 'src/app/shared/models/category';
 
 @Component({
-  selector: 'app-add-task',
-  templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.scss'],
+  selector: 'app-edit-task',
+  templateUrl: './edit-task.component.html',
+  styleUrls: ['./edit-task.component.scss'],
 })
-export class AddTaskComponent implements OnInit {
+export class EditTaskComponent implements OnInit {
   ngUnsubscribe$ = new Subject<void>();
   loading = false;
   error = '';
@@ -21,10 +23,20 @@ export class AddTaskComponent implements OnInit {
   editMode = false;
   todoData: Todo;
 
+  categories = [
+    'General',
+    'Category 1',
+    'Category 2',
+    'Category 3',
+    'Category 4',
+    'Category 5',
+  ];
+
   constructor(
     private route: ActivatedRoute,
     private todoService: TodoService,
-    private FormBuilder: FormBuilder
+    private FormBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,22 +48,33 @@ export class AddTaskComponent implements OnInit {
           this.editMode = true;
 
           this.todoData = this.todoService.getTodoByID(+params.id);
-          console.log(this.todoData);
+          console.log('todoData', this.todoData);
         }
       });
 
-    const { title, description } = this.todoData;
+    const { title, description, category } = this.todoData ?? {};
 
     this.form = this.FormBuilder.group({
       title: [
         this.editMode ? title : '',
-        [Validators.required, Validators.pattern(/[A-Z]\b/)],
+        [Validators.required, Validators.pattern(/[a-z]\b/)],
       ],
       description: [
         this.editMode ? description : '',
         [Validators.required, Validators.minLength(10)],
       ],
+      category: [this.editMode ? category : '', [Validators.required]],
     });
+  }
+
+  changeCategory(e) {
+    this.category.setValue(e.target.value, {
+      onlySelf: true,
+    });
+  }
+
+  get category() {
+    return this.form.get('category');
   }
 
   onSubmit(event: MouseEvent) {
@@ -65,6 +88,8 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
+  selectedOption() {}
+
   addTodo() {
     const formData = this.form.getRawValue();
 
@@ -72,12 +97,13 @@ export class AddTaskComponent implements OnInit {
       ...formData,
       completed: false,
     };
+    console.log(this.categories);
+
+    console.log('NEW TODO', newTodo);
 
     this.todoService.addTodo(newTodo);
 
     this.form.reset();
-
-    console.log(this.editMode);
   }
 
   updateTodo() {
@@ -87,6 +113,8 @@ export class AddTaskComponent implements OnInit {
       ...this.todoData,
       ...formData,
     });
+
+    this.router.navigate(['/tasks']);
   }
 
   ngOnDestroy(): void {

@@ -4,9 +4,9 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import { delay } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { Todo } from './shared/models/todo-interface';
 
 import { TodoService } from './shared/services/todo.service';
@@ -14,13 +14,22 @@ import { TodoService } from './shared/services/todo.service';
 @Injectable({
   providedIn: 'root',
 })
-export class TodoResolver implements Resolve<Todo> {
+export class TodoResolver implements Resolve<Todo[]> {
   constructor(private todoService: TodoService) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Todo | Observable<any> | Promise<any> {
-    return this.todoService.loadingTodos().pipe(delay(1000));
+  ): Observable<Todo[]> {
+    return this.todoService.getTodos().pipe(
+      switchMap((todos) => {
+        console.log(todos);
+        if (todos?.length) {
+          return of(todos);
+        }
+
+        return this.todoService.loadingTodos();
+      })
+    );
   }
 }

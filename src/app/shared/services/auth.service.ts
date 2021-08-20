@@ -7,7 +7,9 @@ import { FbAuthResponse } from '../models/firebase-interfase';
 import { HttpErrors } from '../models/http-errors';
 import { User } from '../models/user-interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
   public error$ = new Subject<string>();
 

@@ -7,7 +7,7 @@
 
             <div *ngIf="form.get('title').invalid && form.get('title').touched" class="validation">
                 <small *ngIf="form.get('title').errors.required">Title field cannot be empty</small>
-                <small *ngIf="form.get('title').errors.pattern">Enter the title in uppercase</small>
+                <small *ngIf="form.get('title').errors.pattern">Enter the title in lowercase</small>
             </div>
         </div>
 
@@ -24,17 +24,20 @@
             </div>
         </div>
 
-        <select>
-      <option>Category 1</option>
-      <option>Category 2</option>
-      <option>Category 3</option>
-      <option>Category 4</option>
-      <option>Category 5</option>
+        <select class="select-category" formControlName="category">
+      <option value="" desabled>Choose your category</option>
+      <option *ngFor="let category of categories" [ngValue]="category" (cahnge)="changeCategory($event)">{{ category }}
+      </option>
     </select>
 
-        <button class="btn" [class.btn-add]="!editMode" type="submit" [disabled]="form.invalid">
-          {{ !editMode ? 'Add' : 'Save' }}
-        </button>
+        <div *ngIf="form.get('category').invalid && form.get('category').touched" class="validation">
+            <small *ngIf="form.get('category').errors.required">Please select a category</small>
+        </div>
+
+        <button class="btn" [class.btn-add]="!editMode" [class.btn-save]="editMode" type="submit" [disabled]="form.invalid">
+      {{ !editMode ? 'Add' : 'Save' }}
+    </button>
+        <button *ngIf="editMode" [class.btn-back]="editMode" class="btn" type="button">Back</button>
     </form>
 
 </div>

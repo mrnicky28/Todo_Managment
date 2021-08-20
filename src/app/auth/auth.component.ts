@@ -4,7 +4,6 @@ import {
   FormControl,
   FormGroup,
   Validators,
-  ReactiveFormsModule,
 } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user-interface';
@@ -17,10 +16,11 @@ import { PasswordValidator } from 'src/app/validators/password.validator';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })
-export class AuthPageComponent implements OnInit {
+export class AuthComponent implements OnInit {
   form: FormGroup;
   submitted = false;
   message: string;
+  loading = false;
 
   constructor(
     private FormBuilder: FormBuilder,
@@ -64,7 +64,6 @@ export class AuthPageComponent implements OnInit {
 
     this.auth.login(user).subscribe(
       () => {
-        this.form.reset();
         this.router.navigate(['/tasks']);
         this.submitted = false;
       },

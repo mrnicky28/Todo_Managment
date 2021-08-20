@@ -22,6 +22,7 @@
 
 .form-control {
     text-align: end;
+    margin: 0;
 }
 
 textarea {
@@ -32,9 +33,23 @@ textarea {
     }
 }
 
+.select-category {
+    margin-bottom: 10px;
+}
+
 .btn-add {
     background-color: #50c878;
+    margin: 0;
+}
+
+.btn-save {
+    background-color: #50c878;
     margin: 10px 0;
+}
+
+.btn-back {
+    background-color: #dc3545;
+    margin: 0 0 0 10px;
 }
 
 .input-description {

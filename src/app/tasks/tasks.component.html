@@ -1,28 +1,29 @@
 <div class="wrapper">
     <aside>
         <app-search-task></app-search-task>
+        <app-category></app-category>
     </aside>
     <div class="wrapper-task">
 
-        <app-add-task></app-add-task>
+        <app-edit-task></app-edit-task>
 
         <p *ngIf="error; else todoBlocks" class="error">{{ error }}</p>
 
         <ng-template #todoBlocks>
             <div *ngIf="!loading; else loadingBlock">
                 <div *ngIf="todos.length; else noTodos">
-                    <div routerLink="/task/edit/{{ todo.id }}" class="card" *ngFor="let todo of todos | filter:searchValue">
+                    <div routerLink="/task/edit/{{ todo.id }}" class="card" [appColor]="'red'" *ngFor="let todo of todos | filter:searchValue">
 
                         <div class="post-info">
-                            <button class="btn btn-danger btn-delete" type="button" (click)="deleteTodo(todo.id)">X</button>
+                            <button class="btn btn-danger btn-delete" type="button" (click)="deleteTodo(todo.id, $event)">X</button>
                             <div class="title-info" [class.completed]="todo.completed">{{ todo.title | titlecase }}</div>
-                            <div [class.completed]="todo.completed">{{todo.description}}
+                            <div class="todo-description" [class.completed]="todo.completed">{{todo.description}}
                             </div>
                             <div class="card-footer">
-                                <div>{{ todo.category}}</div>
+                                <div class="todo-category">{{ todo.category}}</div>
                                 <div class="btns">
                                     <button class="btn" type="button"><a routerLink="/task/edit/{{ todo.id }}">Edit</a></button>
-                                    <button class="btn" type="button" [disabled]="todo.completed" (click)="completeTodo(todo.id)">To
+                                    <button class="btn" type="button" (click)="completeTodo(todo.id, $event)">To
                     complete</button>
                                 </div>
                             </div>

@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, delay, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Categories } from '../models/category';
 import { Todo } from '../models/todo-interface';
@@ -20,11 +19,11 @@ export class TodoService {
     this.todos$.next([
       ...this.todos$.value,
       {
-        id: this.todos$.value?.length + 1,
+        id: this.todos$.value?.length + 2,
         ...todo,
       },
     ]);
-    console.log(this.todos$);
+    console.log('todos', this.todos$);
   }
 
   deleteTodo(id: number): void {
@@ -39,8 +38,16 @@ export class TodoService {
     );
   }
 
-  getTodos(): BehaviorSubject<Todo[]> {
-    return this.todos$;
+  getTodos(): Observable<Todo[]> {
+    return this.todos$.asObservable().pipe(
+      switchMap((todos) => {
+        if (todos?.length) {
+          return of(todos);
+        }
+
+        return this.loadingTodos();
+      })
+    );
   }
 
   getTodoByID(todoId: number): Todo {
@@ -71,6 +78,8 @@ export class TodoService {
   setSearchTerm(term: string): void {
     this.searchTerm$.next(term.trim());
   }
+
+  setSeacrhCategory() {}
 
   transformData(data: Todo[]): Todo[] {
     return data.map((value: Todo) => {
