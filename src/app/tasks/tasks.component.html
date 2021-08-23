@@ -1,8 +1,8 @@
 <div class="wrapper">
-    <aside>
+    <div class="aside-content">
         <app-search-task></app-search-task>
         <app-category></app-category>
-    </aside>
+    </div>
     <div class="wrapper-task">
 
         <app-edit-task></app-edit-task>
@@ -11,8 +11,8 @@
 
         <ng-template #todoBlocks>
             <div *ngIf="!loading; else loadingBlock">
-                <div *ngIf="todos.length; else noTodos">
-                    <div routerLink="/task/edit/{{ todo.id }}" class="card" [appColor]="'red'" *ngFor="let todo of todos | filter:searchValue">
+                <div *ngIf="(todos$ | async)?.length; else noTodos">
+                    <div [routerLink]="['/task/edit', todo.id]" class="card" *ngFor="let todo of todos$ | async | filter:searchValue" appColor category='{{ todo.category }}'>
 
                         <div class="post-info">
                             <button class="btn btn-danger btn-delete" type="button" (click)="deleteTodo(todo.id, $event)">X</button>
@@ -22,7 +22,7 @@
                             <div class="card-footer">
                                 <div class="todo-category">{{ todo.category}}</div>
                                 <div class="btns">
-                                    <button class="btn" type="button"><a routerLink="/task/edit/{{ todo.id }}">Edit</a></button>
+                                    <button class="btn" type="button"><a [routerLink]="['/task/edit', todo.id]">Edit</a></button>
                                     <button class="btn" type="button" (click)="completeTodo(todo.id, $event)">To
                     complete</button>
                                 </div>

@@ -1,36 +1,43 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Todo } from 'src/app/shared/models/todo-interface';
-
+import { takeUntil } from 'rxjs/operators';
 import { TodoService } from 'src/app/shared/services/todo.service';
+import { Observable, Subject } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksPageComponent implements OnInit {
-  ngUnsubscribe = new Subject<string>();
-  todos: Todo[] = [];
+  ngUnsubscribe$ = new Subject<void>();
+  todos$: Observable<Todo[]>;
   loading = false;
   error = '';
   searchValue: string;
-  constructor(private todoService: TodoService) {}
+  constructor(
+    private todoService: TodoService,
+    private changeDetectirRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit');
-    this.todoService
+    this.todos$ = this.todoService
       .getTodos()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((todos) => {
-        this.todos = todos;
-        console.log(todos);
-      });
+      .pipe(takeUntil(this.ngUnsubscribe$));
+    this.changeDetectirRef.detectChanges();
 
-    this.todoService.searchTerm$.subscribe(
-      (searchTerm: string) => (this.searchValue = searchTerm)
-    );
+    this.todoService.searchTerm$
+      .pipe(takeUntil(this.ngUnsubscribe$))
+      .subscribe((searchTerm: string) => {
+        this.searchValue = searchTerm;
+        this.changeDetectirRef.detectChanges();
+      });
   }
 
   deleteTodo(id: number, event: MouseEvent) {
@@ -48,7 +55,7 @@ export class TasksPageComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next('');
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }

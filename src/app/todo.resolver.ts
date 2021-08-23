@@ -1,15 +1,13 @@
+import { Todo } from './shared/models/todo-interface';
+import { switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { TodoService } from './shared/services/todo.service';
+import { Observable, of } from 'rxjs';
 import {
   ActivatedRouteSnapshot,
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
-
-import { switchMap } from 'rxjs/operators';
-import { Todo } from './shared/models/todo-interface';
-
-import { TodoService } from './shared/services/todo.service';
 
 @Injectable({
   providedIn: 'root',

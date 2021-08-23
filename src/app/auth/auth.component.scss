@@ -1,4 +1,7 @@
 .auth-card {
+    max-width: 600px;
+    min-width: 320px;
+    margin: 0 auto;
     padding: 1rem;
     border: #ccc 1px dotted;
     &-header {
@@ -16,11 +19,6 @@
     }
 }
 
-form {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
 input {
     border-radius: 10px;
     &.ng-invalid.ng-touched {
@@ -31,6 +29,6 @@ input {
     }
 }
 
-small {
+.error-message {
     display: block;
 }

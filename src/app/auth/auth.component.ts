@@ -1,13 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user-interface';
-
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { PasswordValidator } from 'src/app/validators/password.validator';
 
@@ -15,12 +9,12 @@ import { PasswordValidator } from 'src/app/validators/password.validator';
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthComponent implements OnInit {
   form: FormGroup;
   submitted = false;
   message: string;
-  loading = false;
 
   constructor(
     private FormBuilder: FormBuilder,
@@ -32,7 +26,7 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['loginAgain']) {
-        this.message = 'Пожалуйста войдите в систему';
+        this.message = 'Please sign in';
       }
     });
 

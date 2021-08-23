@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  takeUntil,
-} from 'rxjs/operators';
 import { Todo } from 'src/app/shared/models/todo-interface';
+import { FormControl } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { TodoService } from 'src/app/shared/services/todo.service';
 
@@ -15,29 +15,38 @@ import { TodoService } from 'src/app/shared/services/todo.service';
   selector: 'app-search-task',
   templateUrl: './search-task.component.html',
   styleUrls: ['./search-task.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchTaskComponent implements OnInit {
-  todos$!: Observable<Todo[]>;
-  private searchTerms = new Subject<string>();
-  ngUnsubscribe = new Subject<string>();
+  private searchTerms$ = new Subject<string>();
+  private ngUnsubscribe$ = new Subject<void>();
   searchValue = new FormControl();
 
   constructor(
     private todoService: TodoService,
-    private fornBuilder: FormBuilder
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.searchTerms
+    this.searchTerms$
       .pipe(
-        takeUntil(this.ngUnsubscribe),
+        takeUntil(this.ngUnsubscribe$),
         debounceTime(300),
         distinctUntilChanged()
       )
-      .subscribe((term) => this.todoService.setSearchTerm(term));
+      .subscribe((term) => {
+        this.todoService.setSearchTerm(term);
+        this.changeDetectorRef.markForCheck();
+      });
 
     this.searchValue.valueChanges.subscribe((value) => {
-      this.searchTerms.next(value);
+      this.searchTerms$.next(value);
     });
+    this.searchValue.setValue('');
+  }
+
+  onDestroy() {
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }

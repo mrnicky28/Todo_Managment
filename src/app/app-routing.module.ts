@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthComponent } from './auth/auth.component';
-import { MainLayoutComponent } from './main-layout/main-layout.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './auth.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+
+import { AuthComponent } from './auth/auth.component';
 import { EditTaskComponent } from './tasks/edit-task/edit-task.component';
 import { TasksPageComponent } from './tasks/tasks.component';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { CategoryPageComponent } from './category/category.component';
 
 const routes: Routes = [
