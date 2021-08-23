@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -8,10 +8,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./main-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainLayoutComponent implements OnInit {
+export class MainLayoutComponent {
   constructor(private router: Router, public auth: AuthService) {}
 
-  ngOnInit(): void {}
   logout(event: Event) {
     event.preventDefault();
     this.auth.logout();

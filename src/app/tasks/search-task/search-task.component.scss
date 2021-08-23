@@ -22,24 +22,6 @@ input {
     display: block;
 }
 
-.search-result li a {
-    border-bottom: 2px solid rgb(228, 228, 228);
-    border-left: 2px solid rgb(228, 228, 228);
-    border-right: 2px solid rgb(228, 228, 228);
-    border-radius: 5px;
-    display: inline-block;
-    width: 100%;
-    padding: .5rem;
-    box-sizing: border-box;
-    text-decoration: none;
-    color: black;
-}
-
-.search-result li a:hover {
-    background-color: #7df166;
-    color: white;
-}
-
 @media (max-width: 720px) {
     .search-box {
         min-width: 320px;
