@@ -30,7 +30,6 @@ export class TasksPageComponent implements OnInit {
     this.todos$ = this.todoService
       .getTodos()
       .pipe(takeUntil(this.ngUnsubscribe$));
-    this.changeDetectirRef.detectChanges();
 
     this.todoService.searchTerm$
       .pipe(takeUntil(this.ngUnsubscribe$))
@@ -38,6 +37,7 @@ export class TasksPageComponent implements OnInit {
         this.searchValue = searchTerm;
         this.changeDetectirRef.detectChanges();
       });
+    this.changeDetectirRef.detectChanges();
   }
 
   deleteTodo(id: number, event: MouseEvent) {

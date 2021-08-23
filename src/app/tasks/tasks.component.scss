@@ -32,7 +32,10 @@
 }
 
 .todo-description {
-    margin-bottom: 1rem;
+    overflow: hidden;
+    white-space: break-spaces;
+    max-width: 750px;
+    margin: 0 0 16px 0;
 }
 
 .todo-category {

@@ -1,4 +1,3 @@
-import { Todo } from 'src/app/shared/models/todo-interface';
 import { FormControl } from '@angular/forms';
 import {
   ChangeDetectionStrategy,
@@ -6,7 +5,7 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { TodoService } from 'src/app/shared/services/todo.service';

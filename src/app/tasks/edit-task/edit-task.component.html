@@ -37,7 +37,7 @@
         <button class="btn" [class.btn-add]="!editMode" [class.btn-save]="editMode" type="submit" [disabled]="form.invalid">
       {{ !editMode ? 'Add' : 'Save' }}
     </button>
-        <button *ngIf="editMode" [class.btn-back]="editMode" class="btn" type="button">Back</button>
+        <button *ngIf="editMode" [class.btn-back]="editMode" class="btn" type="button" [routerLink]="['/tasks']">Back</button>
     </form>
 
 </div>
