@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/models/user-interface';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { PasswordValidator } from 'src/app/validators/password.validator';
@@ -11,10 +17,11 @@ import { PasswordValidator } from 'src/app/validators/password.validator';
   styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   form: FormGroup;
   submitted = false;
   message: string;
+  subscription: Subscription;
 
   constructor(
     private FormBuilder: FormBuilder,
@@ -24,7 +31,7 @@ export class AuthComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params: Params) => {
+    this.subscription = this.route.queryParams.subscribe((params: Params) => {
       if (params['loginAgain']) {
         this.message = 'Please sign in';
       }
@@ -65,5 +72,9 @@ export class AuthComponent implements OnInit {
         this.submitted = false;
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -2,12 +2,7 @@ import { Todo } from 'src/app/shared/models/todo-interface';
 import { takeUntil } from 'rxjs/operators';
 import { TodoService } from 'src/app/shared/services/todo.service';
 import { Observable, Subject } from 'rxjs';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tasks',
@@ -18,26 +13,20 @@ import {
 export class TasksPageComponent implements OnInit {
   ngUnsubscribe$ = new Subject<void>();
   todos$: Observable<Todo[]>;
+
   loading = false;
   error = '';
-  searchValue: string;
-  constructor(
-    private todoService: TodoService,
-    private changeDetectirRef: ChangeDetectorRef
-  ) {}
+  searchValue$: Observable<string>;
+  constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
     this.todos$ = this.todoService
       .getTodos()
       .pipe(takeUntil(this.ngUnsubscribe$));
 
-    this.todoService.searchTerm$
-      .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe((searchTerm: string) => {
-        this.searchValue = searchTerm;
-        this.changeDetectirRef.detectChanges();
-      });
-    this.changeDetectirRef.detectChanges();
+    this.searchValue$ = this.todoService.searchTerm$.pipe(
+      takeUntil(this.ngUnsubscribe$)
+    );
   }
 
   deleteTodo(id: number, event: MouseEvent) {

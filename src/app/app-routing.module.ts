@@ -7,7 +7,7 @@ import { AuthComponent } from './auth/auth.component';
 import { EditTaskComponent } from './tasks/edit-task/edit-task.component';
 import { TasksPageComponent } from './tasks/tasks.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
-import { CategoryPageComponent } from './category/category.component';
+import { CategoryComponent } from './category/category.component';
 
 const routes: Routes = [
   {
@@ -28,7 +28,7 @@ const routes: Routes = [
       },
       {
         path: 'category/:id',
-        component: CategoryPageComponent,
+        component: CategoryComponent,
         canActivate: [AuthGuard],
       },
     ],

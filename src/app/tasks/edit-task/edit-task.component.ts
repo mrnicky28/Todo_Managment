@@ -5,7 +5,7 @@ import { TodoService } from 'src/app/shared/services/todo.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Categories } from 'src/app/shared/models/category';
+import { CategoryService } from 'src/app/shared/services/category.service';
 
 @Component({
   selector: 'app-edit-task',
@@ -15,7 +15,7 @@ import { Categories } from 'src/app/shared/models/category';
 })
 export class EditTaskComponent implements OnInit {
   ngUnsubscribe$ = new Subject<void>();
-  categories = Object.values(Categories);
+  categories = this.categoryService.categories;
   loading = false;
   error = '';
   form: FormGroup;
@@ -26,10 +26,13 @@ export class EditTaskComponent implements OnInit {
     private route: ActivatedRoute,
     private todoService: TodoService,
     private FormBuilder: FormBuilder,
-    private router: Router
-  ) {}
+    private router: Router,
+    private categoryService: CategoryService
+  ) {} //null injector di decorator skipSelf optional self host ng-tamplate ng-container
 
   ngOnInit(): void {
+    console.log('categories', this.categories);
+
     this.route.params
       .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((params) => {
@@ -50,8 +53,8 @@ export class EditTaskComponent implements OnInit {
         this.editMode ? this.todoData.description : '',
         [Validators.required, Validators.minLength(10)],
       ],
-      category: [
-        this.editMode ? this.todoData.category : '',
+      categoryId: [
+        this.editMode ? this.todoData.categoryId : null,
         [Validators.required],
       ],
     });

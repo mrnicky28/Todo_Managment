@@ -1,10 +1,10 @@
 <div class="wrapper">
     <div class="aside-content">
         <app-search-task></app-search-task>
-        <app-category></app-category>
+        <app-category-list></app-category-list>
     </div>
-    <div class="wrapper-task">
 
+    <div class="wrapper-task">
         <app-edit-task></app-edit-task>
 
         <p *ngIf="error; else todoBlocks" class="error">{{ error }}</p>
@@ -12,19 +12,22 @@
         <ng-template #todoBlocks>
             <div *ngIf="!loading; else loadingBlock">
                 <div *ngIf="(todos$ | async)?.length; else noTodos">
-                    <div [routerLink]="['/task/edit', todo.id]" class="card" *ngFor="let todo of todos$ | async | filter:searchValue" appColor category='{{ todo.category }}'>
+                    <div [routerLink]="['/task/edit', todo.id]" class="card" *ngFor="let todo of todos$ | async | filter:(searchValue$ | async)" [appColor]="todo.categoryId">
 
                         <div class="post-info">
                             <button class="btn btn-danger btn-delete" type="button" (click)="deleteTodo(todo.id, $event)">X</button>
+
                             <div class="title-info" [class.completed]="todo.completed">{{ todo.title | titlecase }}</div>
                             <div class="todo-description" [class.completed]="todo.completed">{{todo.description}}
                             </div>
+
                             <div class="card-footer">
-                                <div class="todo-category">{{ todo.category}}</div>
+                                <div class="todo-category">{{ todo.categoryId | getTitleCategory }}</div>
                                 <div class="btns">
                                     <button class="btn" type="button"><a [routerLink]="['/task/edit', todo.id]">Edit</a></button>
-                                    <button class="btn" type="button" (click)="completeTodo(todo.id, $event)">To
-                    complete</button>
+                                    <button [class.completed]="!todo.completed" class="btn" type="button" (click)="completeTodo(todo.id, $event)">{{ !todo.completed ? 'Completed' : 'Сancel execution'
+                    }}</button>
+
                                 </div>
                             </div>
                         </div>

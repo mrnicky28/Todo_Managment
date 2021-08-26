@@ -16,22 +16,21 @@
 
             <div *ngIf="form.get('description').invalid && form.get('description').touched" class="validation">
                 <small *ngIf="form.get('description').errors.required">Description field cannot be empty</small>
-                <small *ngIf="form.get('description').errors.minlength">Description must contain at least 10
-          characters</small>
-                <small *ngIf="form.get('description').errors.correctDescription">At least one character and at least one
-          number
+                <small *ngIf="form.get('description').errors.minlength">Description must contain at least 10 characters</small>
+                <small *ngIf="form.get('description').errors.correctDescription">At least one character and at least one number
           must be entered</small>
             </div>
         </div>
 
-        <select class="select-category" formControlName="category">
+        <select class="select-category" formControlName="categoryId">
       <option value="" desabled>Choose your category</option>
-      <option *ngFor="let category of categories" [ngValue]="category" (cahnge)="changeCategory($event)">{{ category }}
+      <option *ngFor="let category of categories" [ngValue]="category.id" (cahnge)="changeCategory($event)">
+        {{ category.title }}
       </option>
     </select>
 
-        <div *ngIf="form.get('category').invalid && form.get('category').touched" class="validation">
-            <small *ngIf="form.get('category').errors.required">Please select a category</small>
+        <div *ngIf="form.get('categoryId').invalid && form.get('categoryId').touched" class="validation">
+            <small *ngIf="form.get('categoryId').errors.required">Please select a category</small>
         </div>
 
         <button class="btn" [class.btn-add]="!editMode" [class.btn-save]="editMode" type="submit" [disabled]="form.invalid">

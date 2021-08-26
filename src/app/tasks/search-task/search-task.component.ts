@@ -20,19 +20,20 @@ export class SearchTaskComponent implements OnInit {
   private searchTerms$ = new Subject<string>();
   private ngUnsubscribe$ = new Subject<void>();
   searchValue = new FormControl();
+  public inputValue: string;
 
   constructor(
     private todoService: TodoService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
+  public search(): void {
+    console.log(this.inputValue);
+  }
+
   ngOnInit(): void {
     this.searchTerms$
-      .pipe(
-        takeUntil(this.ngUnsubscribe$),
-        debounceTime(300),
-        distinctUntilChanged()
-      )
+      .pipe(takeUntil(this.ngUnsubscribe$), distinctUntilChanged())
       .subscribe((term) => {
         this.todoService.setSearchTerm(term);
         this.changeDetectorRef.markForCheck();

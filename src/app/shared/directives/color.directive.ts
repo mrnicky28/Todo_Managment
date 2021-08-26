@@ -6,37 +6,25 @@ import {
   Renderer2,
 } from '@angular/core';
 import { Categories } from '../models/category';
+import { CategoryService } from '../services/category.service';
 
 @Directive({
   selector: '[appColor]',
 })
 export class ColorDirective {
-  @Input('category') category: string;
+  @Input('appColor') categoryId: number;
   private color: string;
 
-  constructor(private element: ElementRef, private renderer: Renderer2) {
+  constructor(
+    private element: ElementRef,
+    private renderer: Renderer2,
+    private categoryService: CategoryService
+  ) {
     this.renderer.setStyle(this.element.nativeElement, 'cursor', 'pointer');
   }
 
   @HostListener('mouseenter') onMouseEnter() {
-    switch (this.category) {
-      case Categories.GENERAL:
-        this.color = '#f8b5ab';
-        break;
-      case Categories.CATEGORY1:
-        this.color = '#e2d2fd';
-        break;
-      case Categories.CATEGORY2:
-        this.color = '#ffbdde';
-        break;
-      case Categories.CATEGORY3:
-        this.color = '#5fffbc';
-        break;
-      case Categories.CATEGORY4:
-        this.color = '#a2ffff';
-        break;
-    }
-    this.setColor(this.color);
+    this.setCategoryColor();
   }
 
   @HostListener('mouseleave') onMouseLeave() {
@@ -49,5 +37,34 @@ export class ColorDirective {
       'background-color',
       color
     );
+  }
+
+  private setCategoryColor() {
+    const category = this.categoryService.categories.find(
+      (category) => category.id === this.categoryId
+    );
+
+    if (!category) {
+      return;
+    }
+
+    switch (category.title) {
+      case Categories.GENERAL:
+        this.color = '#f8b5ab';
+        break;
+      case Categories.IMPORTANT:
+        this.color = '#e2d2fd';
+        break;
+      case Categories.PLANNED:
+        this.color = '#ffbdde';
+        break;
+      case Categories.WORK:
+        this.color = '#5fffbc';
+        break;
+      case Categories.EDUCATION:
+        this.color = '#a2ffff';
+        break;
+    }
+    this.setColor(this.color);
   }
 }

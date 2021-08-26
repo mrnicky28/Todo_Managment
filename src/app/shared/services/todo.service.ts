@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Categories } from '../models/category';
+import { Categories, Category } from '../models/category';
 import { Todo } from '../models/todo-interface';
+import { CategoryService } from './category.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ import { Todo } from '../models/todo-interface';
 export class TodoService {
   private todos$ = new BehaviorSubject<Todo[]>([]); //доступ из компонентов и сервисов мы не емеем
   searchTerm$ = new BehaviorSubject<string>('');
+  category: Category;
 
   constructor(private http: HttpClient) {}
 
@@ -44,7 +46,6 @@ export class TodoService {
         if (todos?.length) {
           return of(todos);
         }
-
         return this.loadingTodos();
       })
     );
@@ -79,14 +80,12 @@ export class TodoService {
     this.searchTerm$.next(term.trim());
   }
 
-  setSeacrhCategory() {}
-
   transformData(data: Todo[]): Todo[] {
     return data.map((value: Todo) => {
       return {
         ...value,
         description: '',
-        category: Categories.GENERAL,
+        categoryId: Math.floor(Math.random() * 5) + 1,
       };
     });
   }
