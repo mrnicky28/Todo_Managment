@@ -1,0 +1,88 @@
+.tasks {
+    min-width: 600px;
+    margin: 0 auto;
+}
+
+.aside-content {
+    margin-right: 15px;
+}
+
+.card {
+    min-width: 320px;
+    padding: 1rem;
+    border: #ccc 1px dotted;
+    margin: 0;
+    margin-bottom: 0.7rem;
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-content {
+        margin-bottom: .5rem;
+    }
+}
+
+.wrapper-task {
+    width: 100%;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-info {
+    margin-bottom: 1rem;
+}
+
+.title-info {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 1rem;
+}
+
+.todo-description {
+    overflow: hidden;
+    white-space: break-spaces;
+    max-width: 750px;
+    margin: 0 0 16px 0;
+}
+
+.todo-category {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.btn-delete {
+    float: right;
+}
+
+.btns {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+div.completed {
+    text-decoration: line-through;
+}
+
+.no-todos {
+    color: red;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+@media (max-width: 720px) {
+    .wrapper {
+        flex-direction: column;
+    }
+    .aside-content {
+        margin-right: 0;
+    }
+}

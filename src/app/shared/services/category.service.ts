@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Categories, Category } from '../models/category';
-import { Todo } from '../models/todo-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -34,13 +32,4 @@ export class CategoryService {
       color: '#FFF',
     },
   ];
-
-  private todos$ = new BehaviorSubject<Todo[]>([]);
-  todo: any;
-
-  constructor() {}
-
-  getTodosByCategoryId(categoryId: number) {
-    this.todos$.value.filter((todo) => todo.id === categoryId);
-  }
 }

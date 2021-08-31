@@ -42,8 +42,6 @@ export class EditTaskComponent implements OnInit {
         }
       });
 
-    // const { title, description, category } = this.todoData ?? {};
-
     this.form = this.FormBuilder.group({
       title: [
         this.editMode ? this.todoData.title : '',
@@ -57,6 +55,10 @@ export class EditTaskComponent implements OnInit {
         this.editMode ? this.todoData.categoryId : null,
         [Validators.required],
       ],
+    });
+
+    this.form.statusChanges.subscribe((status) => {
+      console.log(status);
     });
   }
 

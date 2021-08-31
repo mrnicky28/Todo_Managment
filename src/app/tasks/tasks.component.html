@@ -24,9 +24,10 @@
                             <div class="card-footer">
                                 <div class="todo-category">{{ todo.categoryId | getTitleCategory }}</div>
                                 <div class="btns">
-                                    <button class="btn" type="button"><a [routerLink]="['/task/edit', todo.id]">Edit</a></button>
-                                    <button [class.completed]="!todo.completed" class="btn" type="button" (click)="completeTodo(todo.id, $event)">{{ !todo.completed ? 'Completed' : 'Сancel execution'
-                    }}</button>
+                                    <button class="btn" type="button" [routerLink]="['/task/edit', todo.id]">Edit</button>
+                                    <button [class.completed]="!todo.completed" class="btn" type="button" (click)="completeTodo(todo.id, $event)">
+                    {{ !todo.completed ? 'Completed' : 'Сancel execution'}}
+                  </button>
 
                                 </div>
                             </div>

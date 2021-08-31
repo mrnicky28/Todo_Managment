@@ -5,7 +5,12 @@
     margin-bottom: 10px;
     border: #ccc 1px dotted;
     .category-link {
+        width: 100%;
+        display: block;
         font-size: 24px;
         color: black;
+        &:hover {
+            background-color: rgb(197, 197, 197);
+        }
     }
 }

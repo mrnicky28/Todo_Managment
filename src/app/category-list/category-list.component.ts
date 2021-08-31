@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CategoryService } from '../shared/services/category.service';
 
 @Component({
@@ -10,6 +10,5 @@ import { CategoryService } from '../shared/services/category.service';
 export class CategoryPageComponent {
   constructor(private categoryService: CategoryService) {}
 
-  // arrayCategory = Object.keys(Categories).map((key) => Categories[key]);
   categories = this.categoryService.categories;
 }

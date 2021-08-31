@@ -12,9 +12,10 @@ import {
 
 import { AppComponent } from './app.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
+import { FilterTodoByCategoryPipe } from './shared/pipes/filter-todo-by-category.pipe';
 
 @NgModule({
-  declarations: [AppComponent, MainLayoutComponent],
+  declarations: [AppComponent, MainLayoutComponent, FilterTodoByCategoryPipe],
   imports: [
     RouterModule,
     BrowserModule,
@@ -24,5 +25,6 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
     FormsModule,
   ],
   bootstrap: [AppComponent],
+  providers: [AuthGuard],
 })
 export class AppModule {}

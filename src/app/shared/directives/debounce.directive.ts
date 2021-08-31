@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Directive({
-  selector: '[ngModel][appDebounce]',
+  selector: '[appDebounce]',
 })
 export class DebounceDirective implements OnInit, OnDestroy {
   @Output()

@@ -1,20 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { Todo } from '../shared/models/todo-interface';
-import { CategoryService } from '../shared/services/category.service';
+import { TodoService } from '../shared/services/todo.service';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent implements OnInit {
-  constructor(private categoryService: CategoryService) {}
+  filteredTodos: Todo[] = [];
 
-  categories = this.categoryService.categories;
-  todos$: Observable<Todo[]> | any;
+  constructor(
+    private todoService: TodoService,
+    private route: ActivatedRoute
+  ) {}
 
-  ngOnInit() {
-    this.categoryService.getTodosByCategoryId(this.categories[1].id);
+  ngOnInit(): void {
+    this.route.params
+      .pipe(switchMap(({ id }) => this.todoService.getTodosByCategoryId(+id)))
+      .subscribe((todos) => {
+        console.log(todos);
+        this.filteredTodos = todos;
+      });
+  }
+
+  deleteTodo(id: number, event: MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.todoService.deleteTodo(id);
+  }
+
+  completeTodo(id: number, event: MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.todoService.completeTodo(id);
   }
 }

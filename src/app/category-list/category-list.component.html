@@ -1,5 +1,5 @@
 <ul class="category-list">
     <li class="category-item" *ngFor="let category of categories">
-        <a class="category-link" [routerLink]="['/category',  category.id]">{{ category.title }}</a>
+        <a class="category-link" [routerLink]="['/tasks/category',  category.id]">{{ category.title }}</a>
     </li>
 </ul>

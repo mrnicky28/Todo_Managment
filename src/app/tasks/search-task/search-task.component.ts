@@ -33,7 +33,12 @@ export class SearchTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchTerms$
-      .pipe(takeUntil(this.ngUnsubscribe$), distinctUntilChanged())
+      .pipe(
+        takeUntil(this.ngUnsubscribe$),
+        distinctUntilChanged(),
+        debounceTime(600)
+      )
+
       .subscribe((term) => {
         this.todoService.setSearchTerm(term);
         this.changeDetectorRef.markForCheck();

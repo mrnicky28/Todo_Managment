@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Categories, Category } from '../models/category';
 import { Todo } from '../models/todo-interface';
@@ -11,7 +11,7 @@ import { CategoryService } from './category.service';
   providedIn: 'root',
 })
 export class TodoService {
-  private todos$ = new BehaviorSubject<Todo[]>([]); //доступ из компонентов и сервисов мы не емеем
+  todos$ = new BehaviorSubject<Todo[]>([]);
   searchTerm$ = new BehaviorSubject<string>('');
   category: Category;
 
@@ -53,6 +53,14 @@ export class TodoService {
 
   getTodoByID(todoId: number): Todo {
     return this.todos$.value.find(({ id }) => id === todoId);
+  }
+
+  getTodosByCategoryId(categoryId: number) {
+    return this.todos$
+      .asObservable()
+      .pipe(
+        map((todos) => todos.filter((todo) => todo.categoryId === categoryId))
+      );
   }
 
   loadingTodos(): Observable<Todo[]> {
