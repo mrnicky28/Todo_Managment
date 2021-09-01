@@ -5,10 +5,26 @@
 
 .aside-content {
     margin-right: 15px;
+    position: sticky;
+    top: 0;
 }
 
 .card {
     min-width: 320px;
+}
+
+.card {
+    padding: 1rem;
+    margin: 0;
+    margin-bottom: 0.7rem;
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-content {
+        margin-bottom: .5rem;
+    }
 }
 
 .wrapper-task {
@@ -49,6 +65,12 @@
 .btns {
     display: flex;
     justify-content: flex-end;
+}
+
+.btn {
+    &:last-child {
+        margin-left: 10px;
+    }
 }
 
 .card-footer {

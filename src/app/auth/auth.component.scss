@@ -1,9 +1,8 @@
 .auth-card {
     max-width: 600px;
     min-width: 320px;
-    margin: 0 auto;
+    margin: 80px auto;
     padding: 1rem;
-    border: #ccc 1px dotted;
     &-header {
         display: flex;
         justify-content: space-between;
@@ -19,14 +18,12 @@
     }
 }
 
-input {
-    border-radius: 10px;
-    &.ng-invalid.ng-touched {
-        border: 2px solid red;
-    }
-    &.ng-valid {
-        border: 2px solid green
-    }
+mat-form-field {
+    width: 100%;
+}
+
+.mat-error {
+    margin-bottom: 10px;
 }
 
 .error-message {

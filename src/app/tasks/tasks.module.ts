@@ -15,6 +15,7 @@ import { SearchTaskComponent } from './search-task/search-task.component';
 import { FilterPipe } from '../shared/pipes/filter.pipe';
 import { TasksRoutingModule } from './tasks-routing.module';
 import { AuthGuard } from '../auth.guard';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AuthGuard } from '../auth.guard';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    MaterialModule,
   ],
   providers: [AuthGuard],
 })

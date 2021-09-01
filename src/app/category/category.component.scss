@@ -63,6 +63,12 @@
     justify-content: flex-end;
 }
 
+.btn {
+    &:nth-child(1) {
+        margin-right: 10px;
+    }
+}
+
 .card-footer {
     display: flex;
     justify-content: space-between;

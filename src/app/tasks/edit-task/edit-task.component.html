@@ -1,42 +1,48 @@
-<div class="card">
+<mat-card class="card">
 
     <form class="form-control" [formGroup]="form" (ngSubmit)="onSubmit($event)">
 
-        <div class="input-wrapper">
-            <input class="input-title" type="text" title="Add task" placeholder="Title" formControlName="title">
+        <mat-form-field appearance="outline">
+            <mat-label>Title</mat-label>
+            <input matInput required class="input-title" type="text" title="Add task" formControlName="title">
 
-            <div *ngIf="form.get('title').invalid && form.get('title').touched" class="validation">
-                <small *ngIf="form.get('title').errors.required">Title field cannot be empty</small>
-                <small *ngIf="form.get('title').errors.pattern">Enter the title in lowercase</small>
-            </div>
+            <mat-error *ngIf="form.get('title').invalid && form.get('title').touched" class="validation">
+                <mat-error *ngIf="form.get('title').errors.required">Title field cannot be empty</mat-error>
+                <mat-error *ngIf="form.get('title').errors.pattern">Enter the title in lowercase</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput required class="input-description" type="text" formControlName="description"></textarea>
+
+            <mat-error *ngIf="form.get('description').invalid && form.get('description').touched" class="validation">
+                <mat-error *ngIf="form.get('description').errors.required">Description field cannot be empty</mat-error>
+                <mat-error *ngIf="form.get('description').errors.minlength">Description must contain at least 10 characters
+                </mat-error>
+                <mat-error *ngIf="form.get('description').errors.correctDescription">At least one character and at least one number must be entered</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Categories</mat-label>
+            <mat-select required class="select-category" formControlName="categoryId">
+                <mat-option *ngFor="let category of categories" [value]="category.id" (cahnge)="changeCategory($event)">
+                    {{ category.title }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('categoryId').invalid && form.get('categoryId').touched" class="validation">
+                <mat-error *ngIf="form.get('categoryId').errors.required">Please select a category</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <div class="btns">
+            <button mat-flat-button [class.btn-add]="!editMode" [class.btn-save]="editMode" type="submit" [disabled]="form.invalid">
+        {{ !editMode ? 'Add' : 'Save' }}
+      </button>
+            <button mat-flat-button color="warn" *ngIf="editMode" [class.btn-back]="editMode" type="button" [routerLink]="['/tasks']">Back</button>
         </div>
 
-        <div class="input-wrapper">
-            <textarea class="input-description" type="text" placeholder="Description" formControlName="description"></textarea>
-
-            <div *ngIf="form.get('description').invalid && form.get('description').touched" class="validation">
-                <small *ngIf="form.get('description').errors.required">Description field cannot be empty</small>
-                <small *ngIf="form.get('description').errors.minlength">Description must contain at least 10 characters</small>
-                <small *ngIf="form.get('description').errors.correctDescription">At least one character and at least one number
-          must be entered</small>
-            </div>
-        </div>
-
-        <select class="select-category" formControlName="categoryId">
-      <option value="" desabled>Choose your category</option>
-      <option *ngFor="let category of categories" [ngValue]="category.id" (cahnge)="changeCategory($event)">
-        {{ category.title }}
-      </option>
-    </select>
-
-        <div *ngIf="form.get('categoryId').invalid && form.get('categoryId').touched" class="validation">
-            <small *ngIf="form.get('categoryId').errors.required">Please select a category</small>
-        </div>
-
-        <button class="btn" [class.btn-add]="!editMode" [class.btn-save]="editMode" type="submit" [disabled]="form.invalid">
-      {{ !editMode ? 'Add' : 'Save' }}
-    </button>
-        <button *ngIf="editMode" [class.btn-back]="editMode" class="btn" type="button" [routerLink]="['/tasks']">Back</button>
     </form>
 
-</div>
+</mat-card>

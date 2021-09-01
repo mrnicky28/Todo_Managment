@@ -1,5 +1,5 @@
-<ul class="category-list">
-    <li class="category-item" *ngFor="let category of categories">
-        <a class="category-link" [routerLink]="['/tasks/category',  category.id]">{{ category.title }}</a>
-    </li>
-</ul>
+<mat-selection-list [multiple]='false' class="category-list">
+    <mat-list-option class="category-item" *ngFor="let category of categories">
+        <div mat-list-text class="category-link" [routerLink]="['/tasks/category',  category.id]">{{ category.title }}</div>
+    </mat-list-option>
+</mat-selection-list>

@@ -1,47 +1,47 @@
-<form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
-    <h2 class="auth-title">Login to the app</h2>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-card class="auth-card">
+        <mat-card-title>Login to the app</mat-card-title>
+        <mat-card-content>
+            <mat-form-field appearance="outline">
 
-    <div class="form-control">
+                <mat-label>Email</mat-label>
+                <input type="text" matInput required id="email" type="email" formControlName="email">
 
-        <label for="email">Email:</label>
-        <input id="email" type="email" formControlName="email">
+                <mat-error *ngIf="form.get('email').touched && form.get('email').invalid" class="validation">
+                    <mat-error *ngIf="form.get('email').errors.required">The email field must not be empty</mat-error>
+                    <mat-error *ngIf="form.get('email').errors.email">Please enter a valid email</mat-error>
+                </mat-error>
 
-        <div *ngIf="form.get('email').touched && form.get('email').invalid" class="validation">
-            <small class="error-message" *ngIf="form.get('email').errors.required">The email field must not be empty</small>
-            <small class="error-message" *ngIf="form.get('email').errors.email">Please enter a valid email</small>
-        </div>
-
-    </div>
-
-    <div class="form-control">
-
-        <label for="password">Password:</label>
-        <input id="password" type="password" formControlName="password">
-
-        <div *ngIf="form.get('password').touched && form.get('password').invalid" class="validation">
-            <small class="error-message" *ngIf="form.get('password').errors.required">Password field must not be empty</small>
-            <small class="error-message" *ngIf="form.get('password').errors.minlength">Password must contain at least
-        {{ form.get('password').errors.minlength.requiredLength }} characters</small>
-            <small class="error-message" *ngIf="form.get('password').errors.maxlength">Password should not be overridden
-        {{ form.get('password').errors.maxlength.requiredLength }} characters</small>
-            <small class="error-message" *ngIf="form.get('password').errors.correctPassword">Password must contain uppercase
-        and lowercase letters
-        of the Latin alphabet</small>
-        </div>
-
-    </div>
-
-    <div class="alern-danger" *ngIf="auth.error$ | async as error">
-        {{ error }}
-    </div>
-
-    <div class="alern-info" *ngIf="message">
-        {{ message }}
-    </div>
+            </mat-form-field>
 
 
-    <button class="btn btn-primary" type="submit" [disabled]="form.invalid || submitted">Sign in</button>
+            <mat-form-field appearance="outline">
+
+                <mat-label>Password</mat-label>
+                <input matInput required id="password" type="password" formControlName="password">
+
+                <mat-error *ngIf="form.get('password').touched && form.get('password').invalid" class="validation">
+                    <mat-error *ngIf="form.get('password').errors.required">Password field must not be empty</mat-error>
+                    <mat-error *ngIf="form.get('password').errors.minlength">Password must contain at least {{ form.get('password').errors.minlength.requiredLength }} characters</mat-error>
+                    <mat-error *ngIf="form.get('password').errors.maxlength">Password should not be overridden {{ form.get('password').errors.maxlength.requiredLength }} characters</mat-error>
+                    <mat-error *ngIf="form.get('password').errors.correctPassword">Password must contain uppercase and lowercase letters of the Latin alphabet</mat-error>
+                </mat-error>
+
+
+            </mat-form-field>
+            <mat-error class="alern-danger" *ngIf="auth.error$ | async as error">
+                {{ error }}
+            </mat-error>
+
+            <mat-error class="alern-info" *ngIf="message">
+                {{ message }}
+            </mat-error>
+            <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || submitted">Sign in</button>
+        </mat-card-content>
+    </mat-card>
 </form>
+
+
 
 <ng-template #loadingBlock>
     <p class="loading">Loading...</p>

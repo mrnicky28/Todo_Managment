@@ -5,8 +5,14 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+import {
+  map,
+  startWith,
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil,
+} from 'rxjs/operators';
 
 import { TodoService } from 'src/app/shared/services/todo.service';
 
@@ -20,6 +26,7 @@ export class SearchTaskComponent implements OnInit {
   private searchTerms$ = new Subject<string>();
   private ngUnsubscribe$ = new Subject<void>();
   searchValue = new FormControl();
+
   public inputValue: string;
 
   constructor(
@@ -33,12 +40,7 @@ export class SearchTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchTerms$
-      .pipe(
-        takeUntil(this.ngUnsubscribe$),
-        distinctUntilChanged(),
-        debounceTime(600)
-      )
-
+      .pipe(takeUntil(this.ngUnsubscribe$), distinctUntilChanged())
       .subscribe((term) => {
         this.todoService.setSearchTerm(term);
         this.changeDetectorRef.markForCheck();
@@ -47,6 +49,15 @@ export class SearchTaskComponent implements OnInit {
     this.searchValue.valueChanges.subscribe((value) => {
       this.searchTerms$.next(value);
     });
+
+    this.searchValue.setValue('');
+  }
+
+  displayFn(todo?: string): string | undefined {
+    return todo ? todo : undefined;
+  }
+
+  resetSearchValue() {
     this.searchValue.setValue('');
   }
 

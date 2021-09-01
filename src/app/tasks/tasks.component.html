@@ -12,10 +12,10 @@
         <ng-template #todoBlocks>
             <div *ngIf="!loading; else loadingBlock">
                 <div *ngIf="(todos$ | async)?.length; else noTodos">
-                    <div [routerLink]="['/task/edit', todo.id]" class="card" *ngFor="let todo of todos$ | async | filter:(searchValue$ | async)" [appColor]="todo.categoryId">
+                    <mat-card [routerLink]="['/task/edit', todo.id]" class="card" *ngFor="let todo of todos$ | async | filter:(searchValue$ | async)" [appColor]="todo.categoryId">
 
                         <div class="post-info">
-                            <button class="btn btn-danger btn-delete" type="button" (click)="deleteTodo(todo.id, $event)">X</button>
+                            <button mat-flat-button color="warn" class="btn-delete" type="button" (click)="deleteTodo(todo.id, $event)">&times;</button>
 
                             <div class="title-info" [class.completed]="todo.completed">{{ todo.title | titlecase }}</div>
                             <div class="todo-description" [class.completed]="todo.completed">{{todo.description}}
@@ -24,8 +24,8 @@
                             <div class="card-footer">
                                 <div class="todo-category">{{ todo.categoryId | getTitleCategory }}</div>
                                 <div class="btns">
-                                    <button class="btn" type="button" [routerLink]="['/task/edit', todo.id]">Edit</button>
-                                    <button [class.completed]="!todo.completed" class="btn" type="button" (click)="completeTodo(todo.id, $event)">
+                                    <button mat-flat-button class="btn" type="button" [routerLink]="['/task/edit', todo.id]">Edit</button>
+                                    <button mat-flat-button [class.completed]="!todo.completed" class="btn" type="button" (click)="completeTodo(todo.id, $event)">
                     {{ !todo.completed ? 'Completed' : 'Сancel execution'}}
                   </button>
 
@@ -33,7 +33,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </mat-card>
                 </div>
                 <ng-template #noTodos>
                     <p class="loading">No posts</p>

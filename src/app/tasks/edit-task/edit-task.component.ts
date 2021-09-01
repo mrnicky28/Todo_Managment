@@ -92,6 +92,9 @@ export class EditTaskComponent implements OnInit {
     };
     this.todoService.addTodo(newTodo);
     this.form.reset();
+    Object.keys(this.form.controls).forEach((key) => {
+      this.form.controls[key].setErrors(null);
+    });
   }
 
   updateTodo() {
