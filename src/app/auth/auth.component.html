@@ -1,11 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
-    <mat-card class="auth-card">
+    <mat-card class="auth-card my-custom-darker-style">
         <mat-card-title>Login to the app</mat-card-title>
         <mat-card-content>
             <mat-form-field appearance="outline">
 
                 <mat-label>Email</mat-label>
-                <input type="text" matInput required id="email" type="email" formControlName="email">
+                <input type="text" class="bg-input" matInput required id="email" type="email" formControlName="email">
 
                 <mat-error *ngIf="form.get('email').touched && form.get('email').invalid" class="validation">
                     <mat-error *ngIf="form.get('email').errors.required">The email field must not be empty</mat-error>

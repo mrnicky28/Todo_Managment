@@ -1,17 +1,29 @@
-<mat-toolbar color="primary" class="navbar-main ">
-    <h1>
-        Todo Manager
-    </h1>
-    <ul *ngIf="auth.isAuthenticated()">
-        <li>
-            <button mat-flat-button color="primary" (click)="logout($event)">Log out</button>
-        </li>
-    </ul>
-</mat-toolbar>
-<div class="container">
-    <router-outlet></router-outlet>
-</div>
-<div class="info" *ngIf="!auth.isAuthenticated()">
-    <div>email: test@mail.ru</div>
-    <div>password: testTEST123</div>
+<div class=" wrapper mat-app-background">
+    <mat-toolbar color="primary" class="navbar-main ">
+        <h1>
+            Todo Manager
+        </h1>
+        <span style="flex:auto"></span>
+        <ul *ngIf="auth.isAuthenticated()">
+            <li>
+                <button mat-flat-button (click)="logout($event)">Log out</button>
+            </li>
+            <li class="toggle-theme">
+                <mat-icon class="mr-8">brightness_5</mat-icon>
+                <mat-slide-toggle [formControl]="toggleControl" class="mr-8">
+                </mat-slide-toggle>
+                <mat-icon>bedtime</mat-icon>
+            </li>
+        </ul>
+
+    </mat-toolbar>
+
+    <div class="container" color="primary">
+        <router-outlet></router-outlet>
+        <div class="info" *ngIf="!auth.isAuthenticated()">
+            <div>email: test@mail.ru</div>
+            <div>password: testTEST123</div>
+        </div>
+    </div>
+
 </div>

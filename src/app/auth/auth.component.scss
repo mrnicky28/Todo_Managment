@@ -1,7 +1,7 @@
 .auth-card {
     max-width: 600px;
     min-width: 320px;
-    margin: 80px auto;
+    margin: 0 auto;
     padding: 1rem;
     &-header {
         display: flex;
@@ -28,4 +28,8 @@ mat-form-field {
 
 .error-message {
     display: block;
+}
+
+.bg-input{
+  background-color: transparent;
 }

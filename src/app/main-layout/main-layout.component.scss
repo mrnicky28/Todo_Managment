@@ -3,10 +3,16 @@
     min-width: 320px;
     width: 100%;
     display: flex;
-    justify-content: space-around;
     align-items: center;
     h1 {
         color: white;
+    }
+}
+
+ul {
+    display: flex;
+    li {
+        margin-right: 10px;
     }
 }
 
@@ -16,6 +22,7 @@ h1 {
 }
 
 .container {
+    height: 100%;
     max-width: 1100px;
     margin: auto;
     overflow: hidden;
@@ -26,4 +33,20 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+mat-toolbar {
+    padding: 0px 70px;
+}
+
+.wrapper {
+    height: 100%;
+}
+.mr-8 {
+  
+  margin-right: 8px;
+}
+.toggle-theme{
+  display: flex;
+  align-items: center;
 }

@@ -1,5 +1,5 @@
 <mat-selection-list [multiple]='false' class="category-list">
-    <mat-list-option class="category-item" *ngFor="let category of categories">
-        <div mat-list-text class="category-link" [routerLink]="['/tasks/category',  category.id]">{{ category.title }}</div>
-    </mat-list-option>
+    <mat-card class="category-item my-custom-darker-style" *ngFor="let category of categories">
+        <div class="my-custom-darker-style" mat-list-text class="category-link" [routerLink]="['/tasks/category',  category.id]">{{ category.title }}</div>
+    </mat-card>
 </mat-selection-list>

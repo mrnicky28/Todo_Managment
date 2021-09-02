@@ -1,5 +1,5 @@
 <div *ngIf="filteredTodos.length; else noTodos"></div>
-<div class="card" *ngFor="let todo of filteredTodos">
+<mat-card class="card" *ngFor="let todo of filteredTodos">
     <div class="post-info">
         <button mat-flat-button color="warn" class="btn btn-danger btn-delete" type="button" (click)="deleteTodo(todo.id, $event)">X</button>
 
@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-</div>
+</mat-card>
 <ng-template #noTodos>
     <p class="no-todos">No posts in this category</p>
 </ng-template>
