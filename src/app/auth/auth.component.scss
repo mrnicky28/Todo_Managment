@@ -1,7 +1,8 @@
 .auth-card {
+    text-align: end;
     max-width: 600px;
     min-width: 320px;
-    margin: 0 auto;
+    margin: 5% auto 0;
     padding: 1rem;
     &-header {
         display: flex;
@@ -22,6 +23,10 @@ mat-form-field {
     width: 100%;
 }
 
+mat-card-title {
+    display: flex;
+}
+
 .mat-error {
     margin-bottom: 10px;
 }
@@ -30,6 +35,6 @@ mat-form-field {
     display: block;
 }
 
-.bg-input{
-  background-color: transparent;
+.bg-input {
+    background-color: transparent;
 }

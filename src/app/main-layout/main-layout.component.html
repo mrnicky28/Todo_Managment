@@ -1,4 +1,4 @@
-<div class=" wrapper mat-app-background">
+<div class="wrapper mat-app-background">
     <mat-toolbar color="primary" class="navbar-main ">
         <h1>
             Todo Manager
@@ -18,6 +18,8 @@
 
     </mat-toolbar>
 
+
+
     <div class="container" color="primary">
         <router-outlet></router-outlet>
         <div class="info" *ngIf="!auth.isAuthenticated()">
@@ -25,5 +27,4 @@
             <div>password: testTEST123</div>
         </div>
     </div>
-
 </div>

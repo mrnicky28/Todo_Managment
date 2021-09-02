@@ -1,5 +1,4 @@
 .navbar-main {
-    margin-bottom: 80px;
     min-width: 320px;
     width: 100%;
     display: flex;
@@ -22,7 +21,6 @@ h1 {
 }
 
 .container {
-    height: 100%;
     max-width: 1100px;
     margin: auto;
     overflow: hidden;
@@ -40,13 +38,14 @@ mat-toolbar {
 }
 
 .wrapper {
-    height: 100%;
+    min-height: 100%;
 }
+
 .mr-8 {
-  
-  margin-right: 8px;
+    margin-right: 8px;
 }
-.toggle-theme{
-  display: flex;
-  align-items: center;
+
+.toggle-theme {
+    display: flex;
+    align-items: center;
 }
