@@ -22,7 +22,6 @@
 .card {
     min-width: 320px;
     padding: 1rem;
-    margin: 5% auto 0;
     margin-bottom: 0.7rem;
     &-header {
         display: flex;
@@ -30,7 +29,7 @@
         align-items: center;
     }
     &-content {
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
     }
 }
 
